@@ -6,7 +6,7 @@ from model import RNN
 from data_loader import DataHandler
 from torch import optim
 
-model = RNN(32, 16, 10, 32, 16)
+model = RNN(562, 16, 10, 32, 16)
 data = DataHandler('/Users/felixschekerka/Desktop/data/HAPT Data Set/Train', '/Users/felixschekerka/Desktop/data/HAPT Data Set/Test')
 
 
@@ -19,18 +19,18 @@ def train_model(model, epochs, lr):
         model.train()
 
         train_loss = 0
-        total = 0
+        running_train_loss = 0
 
-        train_x, train_y = data.df_train_batch(32, 8, 562)
+        train_x, train_y = data.df_train_batch(32, 12, 562)
 
         #transform them into Tensors
         train_x = T.tensor(train_x)
         train_y = T.tensor(train_y)
 
+        train_x = train_x.float()
+        train_y = train_y.float()
 
 
-        train_loss = 0
-        total = 0
 
         #Reset the Gradients
         optimizer.zero_grad()
@@ -48,11 +48,14 @@ def train_model(model, epochs, lr):
         optimizer.step()
 
 
-        sum_loss += train_loss.item()*train_y.shape[0]
-        total += train_y.shape[0]
+        running_train_loss += train_loss.item()
+        avg_train_loss = running_train_loss/32
+        
 
         if i % 5 == 1:
-            print(f'Epoch: {i} | Loss: {train_loss}')
+            print(f'Epoch: {i} | Loss: {avg_train_loss}')
+        
+        T.save(model.state_dict(), 'checkpoint_1000.pth')
 
 
 def classify(model, input):
@@ -63,4 +66,4 @@ def classify(model, input):
     return pred
 
 
-train_model(model, 20, 0.001)
+train_model(model, 1000, 0.001)

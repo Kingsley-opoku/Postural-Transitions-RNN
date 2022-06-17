@@ -15,7 +15,7 @@ class RNN(nn.Module):
         self.fc4 = nn.Linear(64, 12)
 
     def forward(self, x):
-        h_0 = T.zeros((self.num_layer))
+        h_0 = T.zeros((self.num_layers, self.batch_size, self.hidden_size))
         rnn_out , h_n = self.rnn(x, h_0)
         last_hidden = h_n[-1]
         x = F.relu(last_hidden.flatten())
