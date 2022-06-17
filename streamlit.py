@@ -96,11 +96,11 @@ elif app_mode == 'App':
 
     # load model
     model = RNN(562, 16, 10, 32, 16)
-    model.load_state_dict(torch.load("checkpoint_1000.pth"))
+    model.load_state_dict(torch.load("C:\\Users\\ritth\\code\\Strive\\Postural-Transitions-RNN1\\checkpoint_1000.pth"))
 
 
     # load data
-    data = DataHandler('HAPT Data Set (1)\\Train', 'HAPT Data Set (1)\\Test', 'HAPT Data Set (1)\\features.txt')
+    data = DataHandler(r'C:\Users\ritth\code\Strive\Postural-Transitions-RNN1\HAPT Data Set (1)\Train', r'C:\Users\ritth\code\Strive\Postural-Transitions-RNN1\HAPT Data Set (1)\Test', r'C:\Users\ritth\code\Strive\Postural-Transitions-RNN1\HAPT Data Set (1)\features.txt')
     test_x, test_y = data.df_test_batch(32,12, 562)
     test_x = torch.tensor(test_x)
     test_y = torch.tensor(test_y)
@@ -118,9 +118,9 @@ elif app_mode == 'App':
     demo = st.radio('Prediction demo', ['start', 'stop'])
         
 
-    for _, pred_class in data.iterrows():
-        pred = F.softmax(preds, dim=1)
-        pred = pred_class.argmax()
+    for _, pred_class in enumerate(zip(test_x, test_y)):
+        pred = F.softmax(preds)
+        pred = pred.argmax()
 
 
         if demo == 'start':
