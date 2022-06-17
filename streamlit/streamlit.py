@@ -101,8 +101,7 @@ elif app_mode == 'App':
 
 
     # load data
-    data = DataHandler('C:\\Users\\ritth\\code\\Strive\\Strive-Exercises\\Chapter 03\\12. Google challenge\\HAPT Data Set (1)\\Train', 
-                       'C:\\Users\\ritth\\code\\Strive\\Strive-Exercises\\Chapter 03\\12. Google challenge\\HAPT Data Set (1)\\Test')
+    data = DataHandler('HAPT Data Set (1)\\Train', 'HAPT Data Set (1)\\Test')
 
     x = torch.from_numpy(data[:32].values).unsqueeze(0).float()
 
