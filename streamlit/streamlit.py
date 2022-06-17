@@ -4,11 +4,13 @@ from time import sleep
 import torch
 import numpy as np
 import requests
+import torch.nn.functional as F
 import streamlit.components.v1 as stc
 from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
 from model import RNN
 from data_loader import DataHandler
+from train import classify
 
 
 
@@ -91,8 +93,7 @@ elif app_mode == 'App':
 
 
 
-
-    # RNN Model
+# Model starts
 
     # load model
     model = RNN()
@@ -115,8 +116,10 @@ elif app_mode == 'App':
         
 
     for _, pred_class in data.iterrows():
-        pred = torch.max(preds, dim=1)
-        pred = pred_class.item()
+        pred = F.softmax(preds, dim=1)
+        pred = pred_class.argmax()
+
+
         if demo == 'start':
             placeholder = st.empty()
             
