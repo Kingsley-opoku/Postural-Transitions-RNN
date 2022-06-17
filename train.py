@@ -5,7 +5,9 @@ import torch.nn.functional as F
 from model import RNN
 from data_loader import DataHandler
 
-model = RNN()
+model = RNN(32, 16, 10, 32, 16)
+data = DataHandler('/Users/felixschekerka/Desktop/data/HAPT Data Set/Train', '/Users/felixschekerka/Desktop/data/HAPT Data Set/Test')
+
 
 def train_model(model, epochs, lr):
     params = model.parameters()
@@ -18,7 +20,7 @@ def train_model(model, epochs, lr):
         train_loss = 0
         total = 0
 
-        train_x, train_y = 
+        train_x, train_y = data.df_train_batch(32, 8, 562)
 
         #transform them into Tensors
         train_x = T.tensor(train_x)
@@ -58,3 +60,5 @@ def classify(model, input):
         ps = F.softmax(logits, dim=1)
         pred = ps.argmax()
     return pred
+
+
