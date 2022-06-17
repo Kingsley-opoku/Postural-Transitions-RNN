@@ -8,6 +8,7 @@ import streamlit.components.v1 as stc
 from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
 from model import RNN
+from data_loader import DataHandler
 
 
 
@@ -99,7 +100,8 @@ elif app_mode == 'App':
 
 
     # load data
-    data = pd.read_csv('')
+    data = DataHandler('C:\\Users\\ritth\\code\\Strive\\Strive-Exercises\\Chapter 03\\12. Google challenge\\HAPT Data Set (1)\\Train', 
+                       'C:\\Users\\ritth\\code\\Strive\\Strive-Exercises\\Chapter 03\\12. Google challenge\\HAPT Data Set (1)\\Test')
 
     x = torch.from_numpy(data[:32].values).unsqueeze(0).float()
 
