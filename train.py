@@ -4,6 +4,7 @@ from torch import nn
 import torch.nn.functional as F
 from model import RNN
 from data_loader import DataHandler
+from torch import optim
 
 model = RNN(32, 16, 10, 32, 16)
 data = DataHandler('/Users/felixschekerka/Desktop/data/HAPT Data Set/Train', '/Users/felixschekerka/Desktop/data/HAPT Data Set/Test')
@@ -11,8 +12,8 @@ data = DataHandler('/Users/felixschekerka/Desktop/data/HAPT Data Set/Train', '/U
 
 def train_model(model, epochs, lr):
     params = model.parameters()
-    optimizer = T.Adam(params, lr)
-    criterion = T.nn.MSELoss()
+    optimizer = optim.Adam(params, lr)
+    criterion = nn.MSELoss()
     for i in range(epochs):
         #setting model to training mode
         model.train()
@@ -62,3 +63,4 @@ def classify(model, input):
     return pred
 
 
+train_model(model, 20, 0.001)
