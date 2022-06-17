@@ -6,24 +6,56 @@ from torch import nn
 import torch.nn.functional as F
 from model import RNN
 
+model = RNN()
+
 def train_model(model, epochs, lr):
     params = model.parameters()
     optimizer = T.Adam(params, lr)
+    criterion = T.nn.MSELoss()
     for i in range(epochs):
+        #setting model to training mode
         model.train()
+
+        train_loss = 0
+        total = 0
 
         train_x, train_y = next_batch(batch_size, n_steps, df, 9)
 
-        train_loss = 0.0
+        #transform them into Tensors
+        train_x = T.tensor(train_x)
+        train_y = T.tensor(train_y)
+
+
+
+        train_loss = 0
         total = 0
-        
-        y_pred = model(train_x)
+
+        #Reset the Gradients
         optimizer.zero_grad()
-        loss = F.cross_entropy(y_pred, train_y)
-        loss.backward()
+
+        #Get the outputs
+        y_pred = model.forward(train_x)
+
+        #compute the loss
+        train_loss = criterion(y_pred, train_y)
+
+        #compute the gradients
+        train_loss.backward()
+
+        #apply the gradients
         optimizer.step()
-        sum_loss += loss.item()*train_y.shape[0]
+
+
+        sum_loss += train_loss.item()*train_y.shape[0]
         total += train_y.shape[0]
 
         if i % 5 == 1:
             print(f'Epoch: {i} | Loss: {train_loss}')
+
+
+def classify(model, input):
+    with T.no_grad():
+        logits = model.forward(input)
+        ps = F.softmax(logits, dim=1)
+        pred = ps.argmax()
+    return pred
