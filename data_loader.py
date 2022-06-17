@@ -58,7 +58,7 @@ class DataHandler:
         # We create the batches for x using all time series (8) between t and t+n_steps    
         for i, sp in enumerate(starting_points):
             x_train[i] = feat[sp:sp+n_steps]
-            y_train[i] = feat[sp+1:sp+n_steps+1, 562]
+            y_train[i] = feat[sp+1:sp+n_steps+1, 561]
             
         # We create the batches for y using only one time series between t+1 and t+n_steps+1
         
@@ -87,7 +87,7 @@ class DataHandler:
         # We create the batches for x using all time series (8) between t and t+n_steps    
         for i, sp in enumerate(starting_points):
             x_test[i] = feat[sp:sp+n_steps]
-            y_test[i] = feat[sp+1:sp+n_steps+1, 562]
+            y_test[i] = feat[sp+1:sp+n_steps+1, 561]
             
         # We create the batches for y using only one time series between t+1 and t+n_steps+1
         
@@ -105,9 +105,9 @@ class DataHandler:
 
 
 
-if __name__=='__main__':
-    data=DataHandler('E:/Datasets/HAPT Data Set/Train',  'E:/Datasets/HAPT Data Set/Test')
+# if __name__=='__main__':
+#     data=DataHandler('E:/Datasets/HAPT Data Set/Train',  'E:/Datasets/HAPT Data Set/Test')
 
-    x, y=data.df_train_batch(8, 100, 562)
+#     x, y=data.df_train_batch(8, 100, 562)
 
-    print(x)
+#     print(x)
