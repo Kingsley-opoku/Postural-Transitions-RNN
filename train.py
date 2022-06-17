@@ -3,6 +3,7 @@ import torch as T
 from torch import nn
 import torch.nn.functional as F
 from model import RNN
+from data_loader import DataHandler
 
 model = RNN()
 
