@@ -1,5 +1,3 @@
-from argon2 import Parameters
-from inflection import parameterize
 import numpy as np
 import torch as T
 from torch import nn
@@ -19,7 +17,7 @@ def train_model(model, epochs, lr):
         train_loss = 0
         total = 0
 
-        train_x, train_y = next_batch(batch_size, n_steps, df, 9)
+        train_x, train_y = 
 
         #transform them into Tensors
         train_x = T.tensor(train_x)
