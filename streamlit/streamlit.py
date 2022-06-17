@@ -6,8 +6,26 @@ import numpy as np
 import requests
 import streamlit.components.v1 as stc
 from streamlit_option_menu import option_menu
+from streamlit_lottie import st_lottie
 from model import RNN
 
+
+
+
+
+
+# app logo
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+with st.sidebar:
+
+    lottie_url = "https://assets8.lottiefiles.com/packages/lf20_c9hh3d5z.json"
+    lottie_json = load_lottieurl(lottie_url)
+    st_lottie(lottie_json, height=300)
 
 
 
@@ -15,8 +33,8 @@ from model import RNN
 # Menu
 with st.sidebar:
     
-    app_mode = option_menu(None, ["Home", "App", "Logout"],
-                        icons=['house', 'book', 'lock'],
+    app_mode = option_menu(None, ["Home", "App", "Comeback"],
+                        icons=['house', 'phone', 'lock'],
                         menu_icon="app-indicator", default_index=0,
                         styles={
         "container": {"padding": "5!important", "background-color": "#f0f2f6"},
@@ -51,7 +69,7 @@ if app_mode == 'Home':
     st.markdown("Raw data was given to us in order to train our models and try to predict outcomes for the user.")
     st.markdown('\n')
     st.markdown('\n')
-    
+
     
     # Team 
     st.title('**Our Team Members**')
@@ -62,7 +80,7 @@ if app_mode == 'Home':
 
 
 # App page
-if app_mode == 'App':
+elif app_mode == 'App':
     HTML_BANNER = """
     <div style="background-color:#464e5f;padding:10px;border-radius:10px">
     <h1 style="color:white;text-align:center;">Postural-Transitions-RNN</h1>
@@ -196,3 +214,4 @@ else:
 
 
     lottie_logout = load_lottieurl("https://assets1.lottiefiles.com/private_files/lf30_tapgoijy.json")
+    st_lottie(lottie_logout)
