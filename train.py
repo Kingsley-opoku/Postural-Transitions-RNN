@@ -12,7 +12,7 @@ def train_model(model, epochs, lr):
     for i in range(epochs):
         model.train()
 
-        train_x, train_y = next_stock_batch(batch_size, n_steps, df, 9)
+        train_x, train_y = next_batch(batch_size, n_steps, df, 9)
 
         train_loss = 0.0
         total = 0
