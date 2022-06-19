@@ -6,10 +6,10 @@ import numpy as np
 
 class DataHandler:
     def __init__(self, 
-                    #features_names: str, 
-                     train_folder_pth: str, test_folder_pth: str,) -> None:
-        #self.features_names=features_names
-        #self.column_names=self.get_columns()
+                train_folder_pth: str,
+                 test_folder_pth: str,features_names: str) -> None:
+        self.features_names=features_names
+        self.column_names=self.get_columns()
         self.test_folder=test_folder_pth
         self.train_folder=train_folder_pth
         self.df_train=self.train_data()
@@ -20,13 +20,16 @@ class DataHandler:
         return df
 
     def get_columns(self):
-        pass
+        with open(self.features_names) as file:
+            temp = [i.strip() for i in file.readlines()]
+        temp.append('activities')
+        return temp
     
     def train_data(self):
         x_train=self.load_data(file_path=self.train_folder+'/X_train.txt')
         y_train=self.load_data(file_path=self.train_folder+'/y_train.txt')
         df_train=pd.concat([x_train, y_train], axis=1)
-        #df_train.columns=self.column_names
+        df_train.columns=self.column_names
 
         return df_train
     
@@ -34,7 +37,7 @@ class DataHandler:
         x_test=self.load_data(file_path=self.test_folder+'/X_test.txt')
         y_test=self.load_data(file_path=self.test_folder+'/y_test.txt')
         df_test=pd.concat([x_test, y_test], axis=1)
-        #df_test.columns=self.column_names
+        df_test.columns=self.column_names
 
         return df_test
     
@@ -102,12 +105,27 @@ class DataHandler:
 # dft=[]
 # with open('E:/Datasets/HAPT Data Set/features.txt', ) as f:
 #     print(f.read())
+# f = 'E:/Datasets/HAPT Data Set/features.txt'
+# my_file = open('E:/Datasets/HAPT Data Set/features.txt', "r")
+# # content = my_file.read()
+# # print(content)
+
+# # content_list = content.split("\n")
+# # my_file.close()
+
+
+# # print(len(content_list))
+
+# with open(f) as file:
+#     temp = [i.strip() for i in file.readlines()]
 
 
 
-# if __name__=='__main__':
-#     data=DataHandler('E:/Datasets/HAPT Data Set/Train',  'E:/Datasets/HAPT Data Set/Test')
 
-#     x, y=data.df_train_batch(8, 100, 562)
+if __name__=='__main__':
+    data=DataHandler('E:/Datasets/HAPT Data Set/Train',
+      'E:/Datasets/HAPT Data Set/Test', 'E:/Datasets/HAPT Data Set/features.txt')
 
-#     print(x)
+    x=data.train_data()
+
+    print(x)
